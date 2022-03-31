@@ -30,6 +30,6 @@
     "typescript": "~4.3.5"
   },
   "private": true,
-  "name": "Savepass",
+  "name": "savepass",
   "version": "1.0.0"
 }
