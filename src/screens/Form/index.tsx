@@ -2,7 +2,7 @@ import React, { useState} from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import uuid from 'react-native-uuid';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import { styles } from './styles';
 
 import { Input } from '../../components/Input';
@@ -24,6 +24,7 @@ export function Form() {
       password,
     }
 
+    AsyncStorage.setItem(id, JSON.stringify(newData))
   }
 
   return (
