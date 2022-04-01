@@ -12,8 +12,8 @@ export function Home() {
   const [data, setData] = useState<CardProps[]>([]);
 
   async function handleFetchData() {
-    const response = await AsyncStorage.getAllKeys();
-    console.log(response);
+    const response:any = await AsyncStorage.getItem('@savepass:passwords');
+    console.log(JSON.parse(response));
   }
 
   useEffect(() => {
