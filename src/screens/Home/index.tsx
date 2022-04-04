@@ -13,12 +13,23 @@ export function Home() {
 
   async function handleFetchData() {
     const response:any = await AsyncStorage.getItem('@savepass:passwords');
-    console.log(JSON.parse(response));
+    const data = response ? JSON.parse(response) : {};
+    // console.log(data);
+    setData([data]);
+  }
+
+  async function handleRemove(item_id: string) {
+    const response:any = await AsyncStorage.removeItem(item_id);
+    // console.log(JSON.parse(response));
   }
 
   useEffect(() => {
     handleFetchData();
-  },[])
+  },[]);
+
+  useEffect(() => {
+    // handleRemove();
+  },[]);
 
   return (
     <View style={styles.container}>
