@@ -1,36 +1,38 @@
-import { useCallback, useState, useEffect } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { FlatList, Text, View } from 'react-native';
+import { useAsyncStorage } from '@react-native-async-storage/async-storage';
 
-import AsyncStorage, { useAsyncStorage } from '@react-native-async-storage/async-storage';
-import { HeaderHome } from '../../components/HeaderHome';
 import { Card, CardProps } from '../../components/Card';
-import { Button } from '../../components/Button';
+import { HeaderHome } from '../../components/HeaderHome';
+import { useFocusEffect } from '@react-navigation/native';
+
 import { styles } from './styles';
+import { Button } from '../../components/Button';
 
 export function Home() {
   const [data, setData] = useState<CardProps[]>([]);
 
-  const { getItem, setItem } = useAsyncStorage('@savepass:passwords');
-  
+  const { getItem, setItem } = useAsyncStorage("@savepass:passwords");
+
   async function handleFetchData() {
-    const response:any = await getItem();
+    const response = await getItem();
     const data = response ? JSON.parse(response) : [];
     setData(data);
   }
 
-  async function handleRemove(_id: string) {
-    const response:any = await getItem();
+  async function handleRemove(id: string) {
+    const response = await getItem();
     const previousData = response ? JSON.parse(response) : [];
 
-    const data = previousData.filter((item:CardProps) => item.id !== _id);
+    const data = previousData.filter((item: CardProps) => item.id !== id);
     setItem(JSON.stringify(data));
-    setData(data);    
+    setData(data);
   }
 
   useFocusEffect(useCallback(() => {
     handleFetchData();
-  },[]));
+  }, []));
+
 
   return (
     <View style={styles.container}>

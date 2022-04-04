@@ -1,8 +1,9 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import Toast from 'react-native-toast-message';
 import uuid from 'react-native-uuid';
 import { useAsyncStorage } from '@react-native-async-storage/async-storage';
+
 import { styles } from './styles';
 
 import { Input } from '../../components/Input';
@@ -10,13 +11,13 @@ import { Button } from '../../components/Button';
 import { HeaderForm } from '../../components/HeaderForm';
 
 export function Form() {
-  const [name, setName] = useState('');
-  const [user, setUser] = useState('');
-  const [password, setPassword] = useState('');
+  const [name, setName] = useState("");
+  const [user, setUser] = useState("");
+  const [password, setPassword] = useState("");
 
-  const { getItem, setItem } = useAsyncStorage('@savepass:passwords');
+  const { getItem, setItem } = useAsyncStorage("@savepass:passwords");
 
-  async function handleNew(){
+  async function handleNew() {
     try {
       const id = uuid.v4();
 
@@ -24,28 +25,27 @@ export function Form() {
         id,
         name,
         user,
-        password,
+        password
       }
-      
-      const response:any = await getItem();
+
+      const response = await getItem();
       const previousData = response ? JSON.parse(response) : [];
 
       const data = [...previousData, newData];
 
-      await setItem(JSON.stringify(newData));
+      await setItem(JSON.stringify(data));
       Toast.show({
-        type: 'success',
-        text1: 'Cadastrado com sucesso!',
+        type: "success",
+        text1: "Cadastrado com sucesso!"
       })
-      
     } catch (error) {
       console.log(error);
+
       Toast.show({
-        type: 'error',
-        text1: 'Erro ao cadastrar!',
+        type: "error",
+        text1: "Não foi possível cadastrar."
       })
     }
-
   }
 
   return (
